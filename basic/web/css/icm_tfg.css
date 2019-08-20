@@ -1,68 +1,68 @@
   /*Articulos*/
 
 .card-block{
-		overflow-wrap: break-word;
-	}
-	
+        overflow-wrap: break-word;
+    }
+    
 
-		.comentarios-likes{
-			position:absolute;
-			bottom:0;
-			left:0;
-			padding:1rem;
-		}
-		.firma{
-			position:absolute;
-			bottom:0;
-			right:0;
-			padding:1rem;
-			font-size:80%;
-			font-style:italic;
-		}
+        .comentarios-likes{
+            position:absolute;
+            bottom:0;
+            left:0;
+            padding:1rem;
+        }
+        .firma{
+            position:absolute;
+            bottom:0;
+            right:0;
+            padding:1rem;
+            font-size:80%;
+            font-style:italic;
+        }
 
-		.categoria{
-			
-			background-color:white;
-			border-right:1px solid black;
-			border-bottom:0.5px solid black;
-			padding:2%;
-			font-weight: bolder;
-			opacity:0.8;
-		}
+        .categoria{
+            
+            background-color:white;
+            border-right:1px solid black;
+            border-bottom:0.5px solid black;
+            padding:2%;
+            font-weight: bolder;
+            opacity:0.8;
+        }
 
-		.fecha-publicacion{
+        .fecha-publicacion{
 
-			float:right;
-			font-style: italic;
-			font-size:85%;
-		}
+            float:right;
+            font-style: italic;
+            font-size:85%;
+        }
 
-		.no-descuadrar-img {
-	    width: 100%;
-	    height: 25rem;
-	    object-fit: cover;
+        .no-descuadrar-img {
+        width: 100%;
+        height: 25rem;
+        object-fit: cover;
 
-	    border-bottom-left-radius: 10px;
-	    border-bottom-right-radius: 10px;
-	    border-bottom: 1px inset #dedede;
-	    border-left: 1px inset #dedede;
-	    border-right:  1px inset #dedede;
-		}
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-bottom: 1px inset #dedede;
+        border-left: 1px inset #dedede;
+        border-right:  1px inset #dedede;
+        }
 
-		.no-descuadrar-desc {
-	    width: 100%;
-	    height: 3rem;
-	    object-fit: cover;
-	    padding:2%;
-		}
+        .no-descuadrar-desc {
+        width: 100%;
+        height: 3rem;
+        object-fit: cover;
+        padding:2%;
+        }
 
-		.card{
-			height: 50rem;
-			margin-bottom:5rem;
-		
-		}
+        .card{
+            height: 60rem;
+            margin-bottom:5rem;
+        
+        }
 
-		.numero-comentarios{
+        .numero-comentarios{
             position:relative;            
             font-style: italic;
             font-size:150%;
@@ -210,8 +210,3 @@
             margin-bottom:5rem;
         
         }
-
-
-
-
-

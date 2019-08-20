@@ -192,7 +192,7 @@ class RedactoresController extends Controller
                                                          if($model->updateAttributes(['imagen' => $rutaImagen]))
                                                          {  
                                                             //enviamos a la vista del articulo recien creado
-                                                            return $this->redirect(['ver', 'id' => $model->id]);
+                                                            return $this->redirect(['categorias/ver', 'id' => $model->id]);
                                                          }
 
                                                 }

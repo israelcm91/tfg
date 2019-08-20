@@ -12,7 +12,7 @@ $usuario = Usuario::findOne($model->crea_usuario_id);
 
 $autor = $usuario->nick;
 if($categoria!==null) $categoria = $categoria->nombre;
-else $categoria = "Sin categoria";
+else $categoria = "General";
 $nComentarios = ArticuloComentario::find()->articulo_id($model->id)->count();
 //sacar likes totales
 $nLikes = ArticuloLike::find()->articulo($model->id)->count();
@@ -36,7 +36,7 @@ $votarKO =  $nLikes." ".Html::a("",['articulos/dislike','id'=>$model->id],['clas
 <!--Inicio de la tarjeta del articulo-->
 
 
-	<div class="<?= ($index ==0)?'card col-md-8':'card col-md-4' ?>" style='position:relative'>
+	<div class="card <?= ($index ==0)?'card col-md-8':'card col-md-4' ?>" style='position:relative'>
 				<!--Imagen del anuncio-->
 				<a style="display:block" href="?r=articulos/ver&id=<?=$model->id ?>">
 				<div class="view overlay hm-white-slight" style="position:relative">
@@ -89,12 +89,14 @@ $votarKO =  $nLikes." ".Html::a("",['articulos/dislike','id'=>$model->id],['clas
 				<?php
 
 					//si la descripcion es muy larga, la recortamos un poco para no descuadrar 
-					if($index == 0) $model->cuerpo = substr($model->cuerpo,0,150);
-					else $model->cuerpo = substr($model->cuerpo,0,100);
+				$auxiliar  = $model->cuerpo;
+				$auxiliar =strip_tags($auxiliar);
+					if($index == 0) $auxiliar = substr($auxiliar,0,200);
+					else $auxiliar = substr($auxiliar,0,100);
 
-					$cuerpo = explode ("</p>",$model->cuerpo);
+					$cuerpo = explode ("</p>",$auxiliar);
 				
-				if((strlen($model->cuerpo) >= 100) || !isset($cuerpo[1])){
+				if((strlen($auxiliar) >= 100) || !isset($cuerpo[1])){
 						
 						echo $cuerpo[0]."...".Html::a('(ver más)', ['articulos/ver', 'id'=>$model->id]);
 				} 
@@ -129,5 +131,3 @@ $votarKO =  $nLikes." ".Html::a("",['articulos/dislike','id'=>$model->id],['clas
 				
 
 	</div>
-
-

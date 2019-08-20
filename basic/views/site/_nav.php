@@ -22,7 +22,9 @@ $categoria = Categoria::find()->
             join('LEFT JOIN', Articulo::tableName(), 'categorias.id=articulos.categoria_id')->
             groupBy('categorias.id')->
             orderBy(['numerovisitas' => SORT_DESC]);
-$categoria = Categoria::find()->all();
+
+
+$categoria = Categoria::find()->orderBy(['nombre' => SORT_ASC])->all();
 $categorialista=ArrayHelper::map($categoria,'id','nombre');
 $itemlist = [] ;
 //generamos el primer elemento estático, para generar un link de mostrar todos los artículos disponibles
@@ -41,6 +43,10 @@ $itemlist[] = ['label' => '<span class="glyphicon glyphicon-filter"></span>' ,
               ];
 $itemlist[] = ['label' => 'Todos los artículos' ,
                'url' => ['/site/index','all'=> true],
+               'options' => ['class' =>'nav-item'],];
+
+$itemlist[] = ['label' => 'General' ,
+               'url' => ['/site/index','general'=> true],
                'options' => ['class' =>'nav-item'],];
 
 //generar elementos dinamicamente desde la base de datos

@@ -6,11 +6,11 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-
+$this->title = Yii::$app->name.' - '.'Login';
 ?>
 <div class="site-login">
     <div class="col-md-12">
-    <h1><?= Html::encode($this->title) ?></h1>
+
     <?php 
                                     //mostrar alertas.
                                 if((isset($confirmado)) && ($confirmado !== null)){ 
@@ -18,6 +18,30 @@ use yii\bootstrap\ActiveForm;
 
                                 <div class="alert alert-success" role="alert">
                                      <strong>Usuario confirmado</strong> Ahora puedes conectarte.
+                                </div>
+
+
+                            <?php }?>
+
+                            <?php 
+                                    //mostrar alertas.
+                                if((isset($recuperar)) && ($recuperar !== null)){ 
+                                    ?>
+
+                                <div class="alert alert-success" role="alert">
+                                     <strong>Email enviado</strong> Se envió un email para restablecer la contraseña.
+                                </div>
+
+
+                            <?php }?>
+
+                            <?php 
+                                    //mostrar alertas.
+                                if((isset($cambiada)) && ($cambiada !== null)){ 
+                                    ?>
+
+                                <div class="alert alert-success" role="alert">
+                                     <strong>Contraseña cambiada</strong> Has cambiado la contraseña con éxito.
                                 </div>
 
 
@@ -51,7 +75,8 @@ use yii\bootstrap\ActiveForm;
 
     <div class="row" style="color:#999;">
         <div class='col-lg-6'>
-            <p>¿No estás registrado?  <?= Html::a('Registrate aquí', ['usuarios/registro'], ['class' => 'profile-link']) ?> ! </p>
+            <p>¿No estás registrado?  <?= Html::a('Registrate aquí', ['usuarios/registro'], ['class' => 'profile-link']) ?></p>
+             <p>¿Has olvidado tu contraseña?  <?= Html::a('¡Recupérala!', ['usuarios/recuperarpass'], ['class' => 'profile-link']) ?>  </p>
         </div>
     </div>
 </div>

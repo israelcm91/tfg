@@ -330,12 +330,13 @@ class ArticulosController extends Controller
                  $upload->imageFile = UploadedFile::getInstance($upload,'imageFile');
                  //generamos la ruta de la imagen para guardarla                          
                  $rutaImagen = $ruta."/".$upload->imageFile->baseName.'.'.$upload->imageFile->extension;
-                                            
+                          echo $rutaImagen;                  
                   //si la imagen se subio, guardamos la ruta en la base de datos
                   if ($upload->upload($rutaImagen)) 
                   {      
                      //eliminar foto antigua del directorio
-                     unlink($model->imagen);                                                       
+                     if(file_exists($model->imagen)) unlink($model->imagen);
+                                           
                      //actualizamos el campo de la ruta de la imagen en la BD para la tabla articulos.
                      if($model->updateAttributes(['imagen' => $rutaImagen]))
                      {  
@@ -346,8 +347,8 @@ class ArticulosController extends Controller
                         Registro::Registrar('S',"Usuario ".Yii::$app->user->id." modifica articulo ". $id,Yii::$app->controller->id); 
                         //enviamos a la vista del articulo recien creado
                         return $this->redirect(['articulos/ver',
-                                                'id'=>$model->id,
-                                                'modificar'=>true]);
+                                               'id'=>$model->id,
+                                             'modificar'=>true]);
                        
 
                     }

@@ -59,7 +59,7 @@ public function behaviors()
                     ],
                     [
                         'allow'=>true,
-                        'actions'=>['registro','confirmar','reenviar'],
+                        'actions'=>['registro','confirmar','reenviar','recuperarpass','resetpass'],
                         'roles'=>['?'],
                     ],
                     [
@@ -147,7 +147,7 @@ public function behaviors()
      * Acción de login de usuario.  
      */
 
-    public function actionLogin($confirmado=null)
+    public function actionLogin($confirmado=null,$recuperar = null,$cambiada=null)
     {
         
         //comprobar si el usuario está logueado... si ya esta logueado, volver al inicio. (No hay necesidad de login)       
@@ -179,7 +179,9 @@ public function behaviors()
         
         return $this->render('login', [
             'model' => $model,
-            'confirmado'=>$confirmado
+            'confirmado'=>$confirmado,
+            'recuperar'=>$recuperar,
+            'cambiada'=>$cambiada
         ]);
     }
     //acción de logout
@@ -257,6 +259,7 @@ public function behaviors()
         if(($model !== null) && ($model->confirmado == 0)){
                 echo $id;
                 $ctrl = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
+
                 Yii::$app->mailer->compose()->
                 setFrom('icmtfg@gmail.com')->
                 setTo($model->email)->setSubject('TFG ICM - !Completa tu registro, '.$model->nick.'!')->
@@ -269,9 +272,66 @@ public function behaviors()
     }//function
 
 
-    
+    public function actionRecuperarpass(){
 
-    
+        $model = new Usuario();
+
+        if (!$model->load(Yii::$app->request->post()))
+        {
+            return $this->render('forgotpassword', ['model' => $model]);
+        }
+
+        $usuario = Usuario::find()->where(['email'=>$model->email])->one();
+        
+
+        if(($usuario !== null)){
+              
+
+                $ctrl = md5($usuario->id.$usuario->nick.$usuario->email.$usuario->fecha_registro);
+               
+                Yii::$app->mailer->compose()->
+                setFrom('icmtfg@gmail.com')->
+                setTo($model->email)->setSubject('TFG ICM - !Recupera tu contraseña, '.$usuario->nick.'!')->
+                setTextBody('Haz click en el siguiente enlace para restablecer tu contraseña: '.Url::toRoute(['usuarios/resetpass', 'id' => $usuario->id, 'ctrl' => $ctrl ], true))->
+                send();
+
+                return $this->redirect(['login', 'recuperar'=>true]);
+
+        }
+       
+    }//function
+
+    public function actionResetpass($ctrl=null,$id=null){
+
+
+        $usuario = Usuario::findOne($id);
+
+        if($usuario->load(Yii::$app->request->post())){
+            $usuario->updateAttributes(['password' => md5($usuario->password)]);            
+
+                return $this->redirect(['login','cambiada'=>true]);
+
+        }else if($ctrl !==null && $id !== null){
+
+         
+            if($usuario!== null)
+            {
+
+                if($ctrl == md5($usuario->id.$usuario->nick.$usuario->email.$usuario->fecha_registro))
+                {
+                    $usuario->password='';
+                    return $this->render('restablecerpassword', ['model' => $usuario]);
+
+                }
+
+            }
+
+        }
+      
+
+    }
+
+
 
 
     /**

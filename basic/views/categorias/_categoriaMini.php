@@ -88,7 +88,7 @@ $votarKO =  $nLikes." ".Html::a("",['categorias/dislike','id'=>$model->id],['cla
 		if(isset($nota)){  ?>
 			<div>
 				<h3>Nota media</h3>
-				<h1><?=$media?></h1>
+				<h1><?=round($media,2)?></h1>
 				<h5>¡Puntúa este juego!</h5>
 				<?php if(isset($notaUsuario)) echo "<h6>(Has puntuado: ".$notaUsuario.")</h6>"; ?> 
 

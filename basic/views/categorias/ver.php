@@ -7,6 +7,7 @@ use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Articulo */
+$this->title = Yii::$app->name.' - '.$model->nombre;
 
 
 ?>

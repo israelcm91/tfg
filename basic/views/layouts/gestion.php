@@ -10,7 +10,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
-
+$this->title = Yii::$app->name.' - '.'Gestión';
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -39,9 +39,7 @@ AppAsset::register($this);
 
 
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
+       
         <?= Alert::widget() ?>
        
     
@@ -93,7 +91,6 @@ AppAsset::register($this);
         </div>
         <div class="gestion-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
    
 <!--Main column-->
         <div class="col-md-8">

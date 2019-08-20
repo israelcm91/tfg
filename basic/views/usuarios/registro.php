@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 
-
+$this->title = Yii::$app->name.' - '.'Registro';
 
 ?>
 <div class="usuario-create">

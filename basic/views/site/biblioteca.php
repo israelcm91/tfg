@@ -6,10 +6,7 @@ use yii\widgets\ListView;
 use app\models\Categorias;
 use yii\web\View;
 
-
-/* @var $this yii\web\View */
-
-
+$this->title = Yii::$app->name.' - '.'Biblioteca';
 
 
 ?>

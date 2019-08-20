@@ -47,26 +47,11 @@ use yii\data\ActiveDataProvider;
   									?>
 
 								<div class="alert alert-success" role="alert">
- 									 <strong>Contraseña cambiada</strong> Has cambiado tus contraseña con éxito.
+ 									 <strong>Contraseña cambiada</strong> Has cambiado tu contraseña con éxito.
 								</div>
 
 
 							<?php }?>
-
-							<?php
-								if((isset($pass)) && ($pass !== null)){ 
-  									?>
-
-								<div class="alert alert-success" role="alert">
- 									 <strong>Contraseña cambiada</strong> Has cambiado tus contraseña con éxito.
-								</div>
-
-
-							<?php }?>
-
-
-
-
 
 
 						<div class="divider-new">

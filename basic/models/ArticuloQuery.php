@@ -21,6 +21,14 @@ class ArticuloQuery extends \yii\db\ActiveQuery
             ->orderBy(['fecha_publicacion'=>SORT_DESC]);
     }
 
+    public function general($db = null)
+    {
+        return $this
+            ->andWhere(['visible' => 1])
+            ->andWhere(['categoria_id'=>null])
+            ->orderBy(['fecha_publicacion'=>SORT_DESC]);
+    }
+
     public function categorias($categoria_id)
     {
         return $this

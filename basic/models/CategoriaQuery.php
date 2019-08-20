@@ -27,8 +27,8 @@ class CategoriaQuery extends \yii\db\ActiveQuery
         andWhere(['biblioteca' => 1])->
         andFilterWhere(['or',
             ['like','nombre',$texto],
-            ['like','descripcion',$texto],
-            ['like','cuerpo',$texto],])->
+            ['like','descripcion',$texto]
+        ])->
         orderBy(['id'=>SORT_DESC]);
     }
 

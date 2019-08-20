@@ -10,10 +10,11 @@ use app\models\ArticuloLike;
 
 
 $categoria = Categoria::findOne($model->categoria_id);
-$autor = Usuario::findOne($model->crea_usuario_id);
-$autor = $autor->nick;
+$usuario = Usuario::findOne($model->crea_usuario_id);
+if($usuario!=null) $autor = $usuario->nick;
+else $autor = "No existe";
 if($categoria!==null) $categoria = $categoria->nombre;
-else $categoria = "Sin categoria";
+else $categoria = "General";
 
 
 //sacar likes totales

@@ -66,7 +66,7 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex($categoria_id=null,$nPages=25,$baja=null,$vistos=null,$gustados=null)
+    public function actionIndex($categoria_id=null,$nPages=5,$baja=null,$vistos=null,$gustados=null)
     {
 
         
@@ -93,12 +93,25 @@ class SiteController extends Controller
          
 
         }else{
+
             $query = Articulo::find()->nuevos();
         }
+
+        
+
+            
+        if(Yii::$app->request->get('general')){
+
+            $query = Articulo::find()->general();
+        }
+        
+        
         $busqueda = Yii::$app->request->get('busqueda');
         if($busqueda != null){
             $query = Articulo::find()->busqueda($busqueda);
         }
+
+
 
         //paginador
         if($nPages !== 1)

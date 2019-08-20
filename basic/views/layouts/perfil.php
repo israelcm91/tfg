@@ -9,7 +9,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
-
+$this->title = Yii::$app->name.' - '.'Perfil';
 
 AppAsset::register($this);
 ?>
