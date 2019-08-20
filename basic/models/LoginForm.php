@@ -17,6 +17,7 @@ class LoginForm extends Model
     public $password;
     public $rememberMe = true;
     public $fecha_acceso;
+    public $confirmar = false;
 
     private $_user = false;
 
@@ -105,18 +106,23 @@ class LoginForm extends Model
         }
         
         if ($this->validate()) {
-            return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);
+
+            if($this->_user->confirmado == 0){
+                //si el usuario no esta confimado, le mandamos a la pantalla de confirmación de usuario...
+                $this->confirmar = true;
+                return false;
+
+
+
+            }else{
+
+              return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600*24*30 : 0);  
+            }
+            
         }else{
             //preparar el modelo para guardar el registro...
-            $log = new Registro();  
-            $log->fecha_registro = date("Y-m-d H:i:s");     
-            $log->clase_log_id = 'A';
-            $log->modulo = "LoginForm.php";
-            $log->texto = "Intento de acceso fallido";
-            $log->ip = Yii::$app->request->getUserIP();
-            $log->browser = Yii::$app->request->getUserAgent();
-
-            $log->save();
+            Registro::Registrar('A',"Intento de acceso fallido","LoginForm.php");  
+           
             //si es el primer acceso fallido, almacenamos la fecha de acceso
             if($this->_user->num_accesos == 0){
                 $this->_user->updateAttributes(['fecha_acceso' => date("Y-m-d H:i:s"),'num_accesos' => $this->_user->num_accesos+=1]);
@@ -137,17 +143,6 @@ class LoginForm extends Model
 
         }
         return false;
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

@@ -12,6 +12,7 @@ use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use app\models\LoginForm;
 use yii\data\ActiveDataProvider;
+use yii\helpers\Url;
 
 /**
  * UsuariosController implements the CRUD actions for Usuario model.
@@ -58,7 +59,7 @@ public function behaviors()
                     ],
                     [
                         'allow'=>true,
-                        'actions'=>['registro','confirmar'],
+                        'actions'=>['registro','confirmar','reenviar'],
                         'roles'=>['?'],
                     ],
                     [
@@ -123,8 +124,16 @@ public function behaviors()
                 $auth = Yii::$app->authManager;
                 $authorRole = $auth->getRole('usuario');
                 $auth->assign($authorRole, $model->id);
-                //implementar envio de email para confirmar el registro del usuario.
+
+                //envio de email para confirmar el registro del usuario.
+                $ctrl = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
+                Yii::$app->mailer->compose()->
+                setFrom('icmtfg@gmail.com')->
+                setTo($model->email)->setSubject('TFG ICM - !Completa tu registro, '.$model->nick.'!')->
+                setTextBody('Haz click en el siguiente enlace para completar el registro: '.Url::toRoute(['usuarios/confirmar', 'id' => $model->id, 'ctrl' => $ctrl ], true))->
+                send();
                 return $this->redirect(['confirmar', 'id' => $model->id]);
+                
             }
         }
 
@@ -147,17 +156,27 @@ public function behaviors()
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post())) {
 
-            //registrar la fecha de acceso en la base de datos y reiniciar el contador de accesos...
-            $usuario = Usuario::findOne(['id' => Yii::$app->user->id]);
-            $usuario->updateAttributes(['fecha_acceso' => date("Y-m-d H:i:s"),'num_accesos' => 0]);            
+            if($model->login() && !$model->confirmar){
+                //registrar la fecha de acceso en la base de datos y reiniciar el contador de accesos...
+                $usuario = Usuario::findOne(['id' => Yii::$app->user->id]);
+                $usuario->updateAttributes(['fecha_acceso' => date("Y-m-d H:i:s"),'num_accesos' => 0]);            
+                Registro::Registrar('I',"Usuario ".Yii::$app->user->id." se ha conectado",Yii::$app->controller->id); 
+                return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+
+            }else if($model->confirmar){
+
+                $usuario = Usuario::find()->where(['nick'=>$model->username])->one();
+                
+
+                return $this->redirect(['confirmar', 'id' => $usuario->id]);
+            }
             
-            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
         }
 
         $model->password = '';
-        Registro::Registrar('I',"Usuario ".Yii::$app->user->id." se ha conectado",Yii::$app->controller->id); 
+        
         return $this->render('login', [
             'model' => $model,
         ]);
@@ -175,7 +194,7 @@ public function behaviors()
         /**
      * Acción de confirmación del usuario, marca al usuario como confirmado en la base de datos. 
      */
-
+/*
     public function actionConfirmar($id)
     {
         $model = new Usuario();
@@ -191,7 +210,70 @@ public function behaviors()
         return $this->render('confirmar', [
             'model' => $this->findModel($id),
         ]);
-    }
+    }*/
+
+
+    public function actionConfirmar($id,$ctrl=null,$re=null){
+
+        $model = Usuario::findOne($id);
+
+        if(($model !== null) && ($model->confirmado == 0)){
+
+            if($ctrl !== null){
+
+                 $control = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
+
+                if($control === $ctrl)
+                {
+
+                        $model->confirmado = 1;
+                        if($model->save())
+                        {
+                            //usuario confirmado, loguear
+
+                            $login = new LoginForm();
+                            //simulamos la entrada de usuario y contraseña y logueamos
+                            $login->username = $model->nick;
+                            $login->password = $model->password;
+                            $login->login();
+                            $model->updateAttributes(['fecha_acceso' => date("Y-m-d H:i:s"),'num_accesos' => 0]);            
+                    
+                            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+
+                        }
+                }else
+                {
+                    //control no valido
+                    return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+                }
+
+           }else{
+
+                 return $this->render('esperarconfirmacion', ['model' => $model,'re'=>$re]);
+           }
+       }
+       return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+
+    }//function
+
+    public function actionReenviar($id){
+
+        $model = Usuario::findOne($id);
+
+        if(($model !== null) && ($model->confirmado == 0)){
+                echo $id;
+                $ctrl = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
+                Yii::$app->mailer->compose()->
+                setFrom('icmtfg@gmail.com')->
+                setTo($model->email)->setSubject('TFG ICM - !Completa tu registro, '.$model->nick.'!')->
+                setTextBody('Haz click en el siguiente enlace para completar el registro: '.Url::toRoute(['usuarios/confirmar', 'id' => $model->id, 'ctrl' => $ctrl ], true))->
+                send();
+                return $this->redirect(['confirmar', 'id' => $model->id,'re'=>true]);
+
+        }
+       
+    }//function
+
 
     
 
