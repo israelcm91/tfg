@@ -131,7 +131,10 @@ class SiteController extends Controller
     {
       
         $query = Categoria::find()->biblioteca();
-
+        $busqueda = Yii::$app->request->get('busqueda');
+        if($busqueda != null){
+            $query = Categoria::find()->busqueda($busqueda);
+        }
 
         //paginador
         if($nPages !== 1)

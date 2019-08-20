@@ -158,4 +158,4 @@ $votarKO =  $nLikes." ".Html::a("",['articulos/dislike','id'=>$model->id],['clas
     </div>
 
     <a name="comentarios">.</a>
-    <hr/>>
+    <hr/>

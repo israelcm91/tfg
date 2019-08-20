@@ -41,6 +41,7 @@ $config = [
         ],
     ],
     'components' => [
+        
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'uOKaHxmmb3T2aAE_IRD61qNuflavww1D',
@@ -66,7 +67,8 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                
+                'username' => 'icmtfg@gmail.com',
+                'password' => 'icm123456',
                 'port' => '587',
                 'encryption' => 'tls',
             ],

@@ -71,12 +71,12 @@ class CategoriasNotasController extends Controller
                                                    'usuario_id'=> $nota->usuario_id,
                                                    'nota'=> $nota->nota 
                                 ]);
-                    Registro::Registrar('S',"Usuario ".Yii::$app->user->id." cambia nota juego ". $id." a nota ".$nota->nota,Yii::$app->controller->id); 
+                   // Registro::Registrar('S',"Usuario ".Yii::$app->user->id." cambia nota juego ". $id." a nota ".$nota->nota,Yii::$app->controller->id); 
                     return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
                 //si no existe en la base de datos, guardamos el nuevo registro....
                 }else if($nota->save())
                 {
-                    Registro::Registrar('S',"Usuario ".Yii::$app->user->id." vota juego ". $id." con nota ".$nota->nota,Yii::$app->controller->id); 
+                    //Registro::Registrar('S',"Usuario ".Yii::$app->user->id." vota juego ". $id." con nota ".$nota->nota,Yii::$app->controller->id); 
                     return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
                 }
             }

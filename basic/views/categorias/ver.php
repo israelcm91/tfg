@@ -20,6 +20,8 @@ use yii\widgets\ListView;
 							{
 								    
 							    echo Html::a('Ver en directo', $model->stream,['class'=>'btn btn-primary']);
+							    echo '&nbsp';
+							    echo Html::a('Noticias relacionadas', ['site/index','categoria_id'=>$model->id],['class'=>'btn btn-primary']);
 							}
 							?>
 				</p>   

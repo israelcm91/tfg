@@ -53,25 +53,19 @@ use yii\web\View;
 </div>
 <hr/>
 
+<div class="row">
+  <div class="col-md-12 busqueda">
+
+<?= //Barra de navegación de categorias, generada dinamicamente desde la base de datos
+\Yii::$app->view->renderFile('@app/views/site/_busquedabiblioteca.php');?>
+</div>
+</div>
+
 <?= ListView::widget([
             'dataProvider' => $dataProvider,
             'itemView' =>  '../categorias/_categoriaMini',
             'layout' => '{items}<div style="clear: both;"></div>{pager}',
-            
-            /*'layout' => 
-            '<div class="container container-fluid">{items}</div> 
-                <div>
-                    {pager}
-                    <select class="custom-select" style="margin-bottom: 15px;">
-                      <option value="10" '.( (strcasecmp( $nPages, '10') == 0) ? 'selected' : '').'>Mostrar 10 gangas</option>
-                      <option value="25" '.( (strcasecmp( $nPages, '25') == 0) ? 'selected' : '').'>Mostrar 25 gangas</option>
-                      <option value="50" '.( (strcasecmp( $nPages, '50') == 0) ? 'selected' : '').'>Mostrar 50 gangas</option>
-                      <option value="75" '.( (strcasecmp( $nPages, '75') == 0) ? 'selected' : '').'>Mostrar 75 gangas</option>
-                      <option value="100" '.( (strcasecmp( $nPages, '100') == 0) ? 'selected' : '').'>Mostrar 100 gangas</option>
-                      <option value="1" '.( (strcasecmp( $nPages, '1') == 0) ? 'selected' : '').'>Mostrar todas las gangas</option>
-                    </select>
-                    {summary}
-                </div>'*/
+         
         ]); ?>    
 
 

@@ -37,12 +37,13 @@ AppAsset::register($this);
         \Yii::$app->view->renderFile('@app/views/layouts/navbar.php');?>
 
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
+        <div class="col-md-12">
+        <?= Breadcrumbs::widget([
+            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+        <?= Alert::widget() ?>
         <?= $content ?>
-    </div>
-</div>
-    </div>
+    </div></div>
 </div>
 
 <footer class="footer">

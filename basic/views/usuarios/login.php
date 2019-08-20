@@ -11,7 +11,17 @@ use yii\bootstrap\ActiveForm;
 <div class="site-login">
     <div class="col-md-12">
     <h1><?= Html::encode($this->title) ?></h1>
+    <?php 
+                                    //mostrar alertas.
+                                if((isset($confirmado)) && ($confirmado !== null)){ 
+                                    ?>
 
+                                <div class="alert alert-success" role="alert">
+                                     <strong>Usuario confirmado</strong> Ahora puedes conectarte.
+                                </div>
+
+
+                            <?php }?>
     <h1>¡Conéctate! Usa tus credenciales.</h1>
     <hr/>
     <?php $form = ActiveForm::begin([

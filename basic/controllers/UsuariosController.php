@@ -147,7 +147,7 @@ public function behaviors()
      * Acción de login de usuario.  
      */
 
-    public function actionLogin()
+    public function actionLogin($confirmado=null)
     {
         
         //comprobar si el usuario está logueado... si ya esta logueado, volver al inicio. (No hay necesidad de login)       
@@ -179,6 +179,7 @@ public function behaviors()
         
         return $this->render('login', [
             'model' => $model,
+            'confirmado'=>$confirmado
         ]);
     }
     //acción de logout
@@ -230,15 +231,8 @@ public function behaviors()
                         if($model->save())
                         {
                             //usuario confirmado, loguear
-
-                            $login = new LoginForm();
-                            //simulamos la entrada de usuario y contraseña y logueamos
-                            $login->username = $model->nick;
-                            $login->password = $model->password;
-                            $login->login();
-                            $model->updateAttributes(['fecha_acceso' => date("Y-m-d H:i:s"),'num_accesos' => 0]);            
                     
-                            return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+                            return $this->redirect(['usuarios/login','confirmado'=>true]);
 
                         }
                 }else

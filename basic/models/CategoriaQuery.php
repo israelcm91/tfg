@@ -21,6 +21,17 @@ class CategoriaQuery extends \yii\db\ActiveQuery
             ->orderBy(['id'=>SORT_DESC]);
     }
 
+    public function busqueda($texto)
+    {
+        return $this->
+        andWhere(['biblioteca' => 1])->
+        andFilterWhere(['or',
+            ['like','nombre',$texto],
+            ['like','descripcion',$texto],
+            ['like','cuerpo',$texto],])->
+        orderBy(['id'=>SORT_DESC]);
+    }
+
     /**
      * {@inheritdoc}
      * @return Categoria[]|array
