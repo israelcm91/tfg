@@ -55,4 +55,4 @@ use yii\data\ActiveDataProvider;
             </div>
         </div>
     </div>
-</div>
+

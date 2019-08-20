@@ -35,7 +35,7 @@ $votarKO =  $nLikes." ".Html::a("",['articulos/dislike','id'=>$model->id],['clas
 
 <!--Inicio de la tarjeta del articulo-->
 
-<div>
+
 	<div class="card col-md-4" style='position:relative'>
 				<!--Imagen del anuncio-->
 				<a style="display:block" href="?r=articulos/ver&id=<?=$model->id ?>">

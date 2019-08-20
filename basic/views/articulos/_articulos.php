@@ -39,7 +39,7 @@ $votarKO =  $nLikes." ".Html::a("",['articulos/dislike','id'=>$model->id],['clas
 ?>
 <!--Inicio de la tarjeta del articulo-->
 
-<div>
+
     
     <div class="col-md-12">
                <!--Imagen del anuncio-->

@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 
 use app\models\Usuario;
+use app\models\Registro;
 use app\models\Articulo;
 use app\models\ArticuloLike;
 use app\models\Categoria;
