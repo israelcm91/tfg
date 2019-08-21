@@ -133,8 +133,8 @@ class CategoriasController extends Controller
                                 Registro::Registrar('S',"Usuario ".Yii::$app->user->id." crea categoria". $id,Yii::$app->controller->id); 
                                 //si se guarda la categoria, creamos la carpeta asociada a esta para guardar la imagen.
                                 //el nombre sera con el formato "id-timestamp".     
-                                $ruta = "biblioteca/".md5($model->id);
-                                FileHelper::createDirectory($ruta,0700,true);
+                                
+                                
 
                                 //cargamos el input de la imagen del enviado por el formulario
                                 if($upload->load(Yii::$app->request->post()))
@@ -143,6 +143,8 @@ class CategoriasController extends Controller
                                     if(UploadedFile::getInstance($upload,'imageFile')!==null)
                                     {          
 
+                                        $ruta = "biblioteca/".md5($model->id);
+                                        if(!file_exists($ruta))  FileHelper::createDirectory($ruta,0700,true); 
                                         $upload->imageFile = UploadedFile::getInstance($upload,'imageFile');
                                             //generamos la ruta de la imagen para guardarla                          
                                             $rutaImagen = $ruta."/".$upload->imageFile->baseName.'.'.$upload->imageFile->extension;
@@ -257,6 +259,7 @@ class CategoriasController extends Controller
              if(UploadedFile::getInstance($upload,'imageFile')!==null)
                 {   
                  $ruta = "biblioteca/".md5($model->id);
+                 if(!file_exists($ruta))  FileHelper::createDirectory($ruta,0700,true); 
                  $upload->imageFile = UploadedFile::getInstance($upload,'imageFile');
                  //generamos la ruta de la imagen para guardarla                          
                  $rutaImagen = $ruta."/".$upload->imageFile->baseName.'.'.$upload->imageFile->extension;
@@ -265,7 +268,7 @@ class CategoriasController extends Controller
                   if ($upload->upload($rutaImagen)) 
                   {      
                      //eliminar foto antigua del directorio
-                    if($model->imagen!=null)  unlink($model->imagen);                                                       
+                    if($model->imagen!=null && file_exists($model->imagen))  unlink($model->imagen);                                                       
                      //actualizamos el campo de la ruta de la imagen en la BD para la tabla articulos.
                      if($model->updateAttributes(['imagen' => $rutaImagen]))
                      {  

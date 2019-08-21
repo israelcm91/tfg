@@ -119,7 +119,7 @@ class ArticulosController extends Controller
                                 //si se guarda el articulo, creamos la carpeta asociada a este para guardar la imagen.
                                 //el nombre sera el hash md5 de unir el id del articulo con la fecha de publicación.     
                                 $ruta = "articulos/".md5($model->id.$model->fecha_publicacion);
-                                FileHelper::createDirectory($ruta,0700,true);
+                                if(!file_exists($ruta))  FileHelper::createDirectory($ruta,0700,true);
 
                                 //cargamos el input de la imagen del enviado por el formulario
                                 if($upload->load(Yii::$app->request->post()))
@@ -327,15 +327,17 @@ class ArticulosController extends Controller
              if(UploadedFile::getInstance($upload,'imageFile')!==null)
                 {   
                  $ruta = "articulos/".md5($model->id.$model->fecha_publicacion);
+                 if(!file_exists($ruta))  FileHelper::createDirectory($ruta,0700,true);    
                  $upload->imageFile = UploadedFile::getInstance($upload,'imageFile');
                  //generamos la ruta de la imagen para guardarla                          
                  $rutaImagen = $ruta."/".$upload->imageFile->baseName.'.'.$upload->imageFile->extension;
-                          echo $rutaImagen;                  
+                 
+
                   //si la imagen se subio, guardamos la ruta en la base de datos
                   if ($upload->upload($rutaImagen)) 
                   {      
                      //eliminar foto antigua del directorio
-                     if(file_exists($model->imagen)) unlink($model->imagen);
+                     if($model->imagen !== null && file_exists($model->imagen)) unlink($model->imagen);
                                            
                      //actualizamos el campo de la ruta de la imagen en la BD para la tabla articulos.
                      if($model->updateAttributes(['imagen' => $rutaImagen]))

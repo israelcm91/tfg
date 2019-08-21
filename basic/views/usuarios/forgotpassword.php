@@ -10,17 +10,7 @@ use yii\widgets\ActiveForm;
 $this->title = "Contraseña olvidada";
 ?>
 <div class="usuario-view">
-	<?php 
-                                    //mostrar alertas.
-                                if((isset($re)) && ($re !== null)){ 
-                                    ?>
 
-                                <div class="alert alert-success" role="alert">
-                                     <strong>Email reenviado</strong> Se ha reenviado el email de confirmación.
-                                </div>
-
-
-                            <?php }?>
 
     <h1>Recupera tu contraseña</h1>
     

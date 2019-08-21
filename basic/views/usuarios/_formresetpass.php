@@ -10,8 +10,13 @@ use yii\widgets\ActiveForm;
 
 <div class="usuario-form">
 
-    <?php $form = ActiveForm::begin(); ?>
-    <?= $form->field($model, 'id')->hiddenInput()->label(false);?>	
+    <?php $form = ActiveForm::begin([
+        'fieldConfig' => [
+            'template' => "<div class='row'>{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div></div>",
+            'labelOptions' => ['class' => 'col-lg-1 control-label'],
+        ],
+    ]); ?>
+   
     
     <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'password2')->passwordInput(['maxlength' => true]) ?>
@@ -19,7 +24,7 @@ use yii\widgets\ActiveForm;
     
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Restablecer contraseña'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Restablecer contraseña'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
