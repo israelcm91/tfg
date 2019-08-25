@@ -7,6 +7,7 @@ use app\models\Usuario;
 
 $usuario = new Usuario();
 $usuario = $usuario->findOne($model->crea_usuario_id);
+if($usuario==null) $usuario->nick = "Usuario eliminado";
 $formatter = \Yii::$app->formatter;
 
 ?>
