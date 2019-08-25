@@ -62,7 +62,9 @@ class RedactoresController extends Controller
         $nLikes = ArticuloLike::find()->
                     leftJoin('articulos','articulos.id=articulos_likes.articulo_id')->
                     where(['crea_usuario_id'=>Yii::$app->user->id])->count();
-
+        if($nArticulos === null) $nArticulos = 0;
+        if($nVisitas === null) $nVisitas = 0;
+        if($nLikes === null) $nLikes = 0;
 
        return $this->render('index', [
             'model' => $model->findOne(Yii::$app->user->id),

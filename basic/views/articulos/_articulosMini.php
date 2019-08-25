@@ -10,7 +10,8 @@ use app\models\ArticuloComentario;
 $categoria = Categoria::findOne($model->categoria_id);
 $usuario = Usuario::findOne($model->crea_usuario_id);
 
-$autor = $usuario->nick;
+if($usuario!=null) $autor = $usuario->nick;
+else $autor = "No existe";
 if($categoria!==null) $categoria = $categoria->nombre;
 else $categoria = "General";
 $nComentarios = ArticuloComentario::find()->articulo_id($model->id)->count();
