@@ -123,17 +123,25 @@ public function behaviors()
                 Registro::Registrar('I',"Usuario ".$model->id." se ha registrado",Yii::$app->controller->id); 
                 //asignamos el rol usuario
                 //el primer usuario de la web será administrador del sistema
-                $usuario = Usuario::find();
+                $primer_arranque = Configuracion::findOne(['variable' => 'primer_arranque']);
 
-                                      $auth = Yii::$app->authManager;
-                if($usuario !== null) $authorRole = $auth->getRole('usuario');
-                else                  $authorRole = $auth->getRole('sysadmin');
-                                      $auth->assign($authorRole, $model->id);
+
+                $auth = Yii::$app->authManager;
+
+
+                if($primer_arranque->valor > 0) $authorRole = $auth->getRole('usuario');
+                else {
+                     $primer_arranque->updateAttributes(['valor' => 1]);
+                     $authorRole = $auth->getRole('sysadmin');
+                }  
+
+                $auth->assign($authorRole, $model->id);
 
                 //envio de email para confirmar el registro del usuario.
                 $ctrl = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
 
                 $email = Configuracion::findOne(['variable' => 'email']);
+                
 
                 Yii::$app->mailer->compose()->
                 setFrom($email->valor)->
