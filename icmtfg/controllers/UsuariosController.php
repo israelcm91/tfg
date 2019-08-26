@@ -124,15 +124,16 @@ public function behaviors()
                 //asignamos el rol usuario
                 //el primer usuario de la web será administrador del sistema
                 $primer_arranque = Configuracion::findOne(['variable' => 'primer_arranque']);
-
+                if($primer_arranque == null) $primer_arranque = 1;
 
                 $auth = Yii::$app->authManager;
 
 
                 if($primer_arranque->valor > 0) $authorRole = $auth->getRole('usuario');
                 else {
-                     $primer_arranque->updateAttributes(['valor' => 1]);
+                     
                      $authorRole = $auth->getRole('sysadmin');
+                     $primer_arranque->updateAttributes(['valor' => 1]);
                 }  
 
                 $auth->assign($authorRole, $model->id);

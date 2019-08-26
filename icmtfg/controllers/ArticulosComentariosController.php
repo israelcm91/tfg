@@ -184,7 +184,8 @@ class ArticulosComentariosController extends Controller
                 Registro::Registrar('S',"Usuario ".Yii::$app->user->identity->id." oculto comentario ".$id,Yii::$app->controller->id); 
 
                 $model->updateAttributes(['visible' => 0]); 
-               return $this->redirect([$url, 'eliminado'=>true]);
+                if($url==null) return $this->redirect(['articulos/ver', 'eliminado'=>true,'id'=>$model->articulo_id]);
+                else           return $this->redirect([$url, 'eliminado'=>true]);
 
             }
 

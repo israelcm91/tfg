@@ -32,7 +32,8 @@ $categorialista=ArrayHelper::map($categoria,'id','nombre');
        <?= $this->render('_nuevo', [
         'model' => $model,
         'upload'=>$upload,
-        'categorialista' => $categorialista
+        'categorialista' => $categorialista,
+        'modificar'=>true
     ]) ?>
 
 

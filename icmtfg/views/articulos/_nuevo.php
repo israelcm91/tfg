@@ -25,7 +25,12 @@ use yii\widgets\ActiveForm;
         <hr/>
                 
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('app', 'Publicar artículo'), ['class' => 'btn btn-primary']) ?>
+          <?php
+            if(isset($modificar)) echo Html::submitButton(Yii::t('app', 'Modificar artículo'), ['class' => 'btn btn-primary']);
+            else                  echo Html::submitButton(Yii::t('app', 'Publicar artículo'), ['class' => 'btn btn-primary']);
+            
+        ?>
+
             
         </div>
     <?php ActiveForm::end(); ?>
