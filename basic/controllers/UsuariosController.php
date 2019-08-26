@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Registro;
+use app\models\Configuracion;
 use app\models\Usuario;
 use app\models\UsuarioSearch;
 use yii\web\Controller;
@@ -127,8 +128,11 @@ public function behaviors()
 
                 //envio de email para confirmar el registro del usuario.
                 $ctrl = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
+
+                $email = Configuracion::findOne(['variable' => 'email']);
+
                 Yii::$app->mailer->compose()->
-                setFrom('icmtfg@gmail.com')->
+                setFrom($email->valor)->
                 setTo($model->email)->setSubject('TFG ICM - !Completa tu registro, '.$model->nick.'!')->
                 setTextBody('Haz click en el siguiente enlace para completar el registro: '.Url::toRoute(['usuarios/confirmar', 'id' => $model->id, 'ctrl' => $ctrl ], true))->
                 send();
@@ -257,11 +261,12 @@ public function behaviors()
         $model = Usuario::findOne($id);
 
         if(($model !== null) && ($model->confirmado == 0)){
-                echo $id;
+                
                 $ctrl = md5($model->id.$model->nick.$model->email.$model->fecha_registro);
+                $email = Configuracion::findOne(['variable' => 'email']);
 
                 Yii::$app->mailer->compose()->
-                setFrom('icmtfg@gmail.com')->
+                setFrom($email->valor)->
                 setTo($model->email)->setSubject('TFG ICM - !Completa tu registro, '.$model->nick.'!')->
                 setTextBody('Haz click en el siguiente enlace para completar el registro: '.Url::toRoute(['usuarios/confirmar', 'id' => $model->id, 'ctrl' => $ctrl ], true))->
                 send();
@@ -288,9 +293,11 @@ public function behaviors()
               
 
                 $ctrl = md5($usuario->id.$usuario->nick.$usuario->email.$usuario->fecha_registro);
-               
+
+                $email = Configuracion::findOne(['variable' => 'email']);
+
                 Yii::$app->mailer->compose()->
-                setFrom('icmtfg@gmail.com')->
+                setFrom($email->valor)->
                 setTo($model->email)->setSubject('TFG ICM - !Recupera tu contraseña, '.$usuario->nick.'!')->
                 setTextBody('Haz click en el siguiente enlace para restablecer tu contraseña: '.Url::toRoute(['usuarios/resetpass', 'id' => $usuario->id, 'ctrl' => $ctrl ], true))->
                 send();
